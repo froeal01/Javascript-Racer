@@ -1,0 +1,41 @@
+<h1>Grab a carrot and claim your Ollitaur!</h1>
+
+<div class="player_1_start">
+    <p class="name_show">
+          <%=@player_names[0]%>
+    </p>
+    <p>
+      You are the top Ollitaur and will need to press
+      <strong>1</strong> to get your beast moving!
+    </p>
+    <p>
+      Please check the ready box when you are set
+    </p>
+    <p>
+    <form class="go_to_board" action='/game_board' method="get">
+    <input class="go_to_board" type="checkbox" name="player_1_ready" value="player_1_ready">Ready!
+    </p>
+   </form>
+</div>
+
+<div class="player_2_start">
+    <p class="name_show">
+          <%=@player_names[1]%>
+    </p>
+    <p>
+      You are the bottom Ollitaur and will need to press
+      <strong>2</strong> to get your beast moving!
+    </p>
+    <p>
+      Please check the ready box when you are set
+    </p>
+    <p>
+    <input class="go_to_board" type="checkbox" name="player_1_ready" value="player_1_ready">Ready!
+  </p>
+</div>
+
+<div>
+    <form action= '/game_board' method='get'>
+    <input type="submit" value="start!">
+  </form>
+ </div>
