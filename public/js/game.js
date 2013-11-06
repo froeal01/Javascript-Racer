@@ -41,3 +41,64 @@ $(".play_again").html("<a href='/game_board'><button>Play Again</button></a>");
 Game.prototype.letsGo = function(){
 $.post('/game')
 }
+
+Game.prototype.noMove = function(number){
+    if(number == -1){
+    ready = true
+ }
+ else { 
+  this.countDown(number);
+  (number--);
+  console.log(this)
+  setTimeout(function() { game.noMove(number)} , 1000);
+}
+};
+
+Game.prototype.countDown = function(number){
+$(".go").hide();
+var interval = setInterval(function() {
+  $(".countdown").text(number);
+  if (number === 0) {
+    $(".go").show()
+    $(".countdown").hide()
+    explode(".go")
+
+    clearInterval(interval);
+  }
+}, 1000);
+
+}
+
+
+function explode(o) {
+  var $o = $(o);
+
+  $o.html($o.text().replace(/([\S])/g, "<span>$1</span>"));
+  $o.css("position", "relative");
+  $("span", $o).each(function(i) {
+    var newTop = Math.floor(Math.random()*500)*((i%2)?1:-1);
+    var newLeft = Math.floor(Math.random()*500)*((i%2)?1:-1);
+
+    $(this).css({position: "relative",
+      opacity: 1,
+      fontSize: 12,
+      top: 0,
+      left: 0
+    }).animate({
+      opacity: 0,
+      fontSize: 84,
+      top: newTop,
+      left:newLeft
+    },5000);
+  });
+}
+
+
+
+
+
+
+
+
+
+
