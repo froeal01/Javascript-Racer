@@ -1,21 +1,28 @@
 $(document).ready(function() {
 var ready = false
-$(document).ready(function(){
+
+var player1 = new Player($("#player1_strip").data("player-name"));
+var player2 = new Player($("#player2_strip").data("player-name"))
+
+
+var game = new Game(player1, player2);
+
+$(".start_sign_in").on('submit', function(event){
+  event.preventDefault;
+  game.letsGo;
+});
+
+
   prevent_moving(4)
   $(".p1winner").hide();
   $(".p2winner").hide();
-  $(document).keyup(function(event){
+
+ $(document).keyup(function(event){
     if (ready)  {
-      if (event.which === 49) {
-        update_player_position('#player1_strip');
-      }
-      if (event.which === 50) {
-        update_player_position('#player2_strip');
-      }
+      game.keyup(event.which);
     }
   });
 
-});
 
 var counter = 4;
 $(".go").hide();
@@ -30,28 +37,28 @@ var interval = setInterval(function() {
   }
 }, 1000);
 
-function declare_winner(player) {
-  var last_square = $(player).find('td:last-child');
-  if (last_square.hasClass("active")) {
-   var winning_player =$(player).data("player-name");
-   $(".game_winner").html(winning_player + " wins!");
-   $.post('/results', {winner: winning_player});
-   $(".quit").html('<a href="/"><button>Quit</button></a>');
-   $(".play_again").html('<a href="/game"><button>Play Again</button></a>');
-  }
-};
+// function declare_winner(player) {
+//   var last_square = $(player).find('td:last-child');
+//   if (last_square.hasClass("active")) {
+//    var winning_player =$(player).data("player-name");
+//    $(".game_winner").html(winning_player + " wins!");
+//    $.post('/results', {winner: winning_player});
+//    $(".quit").html('<a href="/"><button>Quit</button></a>');
+//    $(".play_again").html('<a href="/game"><button>Play Again</button></a>');
+//   }
+// };
 
-function update_player_position(player) {
-  var active_square = $(player).find(".active");
-  var next_square = active_square.next();
-  var last_square = $('.racer_table').find('td:last-child');
-  active_square.removeClass('active');
-  next_square.addClass('active');
-  if (last_square.hasClass("active")) {
-    $(document).unbind("keyup");
-    declare_winner(player);
-  }
-};
+// function update_player_position(player) {
+//   var active_square = $(player).find(".active");
+//   var next_square = active_square.next();
+//   var last_square = $('.racer_table').find('td:last-child');
+//   active_square.removeClass('active');
+//   next_square.addClass('active');
+//   if (last_square.hasClass("active")) {
+//     $(document).unbind("keyup");
+//     declare_winner(player);
+//   }
+// };
 
 
 function explode(o) {
